@@ -52,14 +52,14 @@ namespace OpenDoorsInSpace
             ResetEjectingDueToNegligance();
         }
 
-        private GameObject GetYouAreFiredOriginalReasonSubtextGameObject()
+        private GameObject FindYouAreFiredOriginalSubtextGameObject()
         {
             return GameObject.Find("/Systems/UI/Canvas/GameOverScreen/MaskImage/HeaderText (1)");
         }
 
         private TextMeshProUGUI CreateYouAreFiredDueToNegliganceSubtext()
         {
-            var youAreFiredOriginalReasonSubtextGameObject = this.GetYouAreFiredOriginalReasonSubtextGameObject();
+            var youAreFiredOriginalReasonSubtextGameObject = this.FindYouAreFiredOriginalSubtextGameObject();
             var youAreFiredNegliganceReasonSubtextGameObject = Instantiate(youAreFiredOriginalReasonSubtextGameObject, youAreFiredOriginalReasonSubtextGameObject.transform.parent);
             youAreFiredNegliganceReasonSubtextGameObject.name = youAreFiredNegliganceReasonSubtextGameObject.name + " (OpenDoorsInSpace fired subtext)";
             youAreFiredNegliganceReasonSubtextGameObject.SetActive(false);
@@ -85,16 +85,15 @@ namespace OpenDoorsInSpace
             {
                 youAreFiredDueToNegliganceSubtextTMP = CreateYouAreFiredDueToNegliganceSubtext();
             }
-            this.GetYouAreFiredOriginalReasonSubtextGameObject()?.SetActive(false);
+            this.FindYouAreFiredOriginalSubtextGameObject()?.SetActive(false);
             youAreFiredDueToNegliganceSubtextTMP.gameObject.SetActive(true);
 
         }
 
         public void ResetEjectingDueToNegligance()
         {
-            // No need to do this as by this point the scene was already reloaded
-            //this.GetYouAreFiredOriginalReasonSubtextGameObject()?.SetActive(true);
-            //youAreFiredNegliganceReasonSubtextTMP?.gameObject.SetActive(false);
+            this.FindYouAreFiredOriginalSubtextGameObject()?.SetActive(true);
+            youAreFiredDueToNegliganceSubtextTMP?.gameObject?.SetActive(false);
 
             IsEjectingDueToNegligence = false;
         }
