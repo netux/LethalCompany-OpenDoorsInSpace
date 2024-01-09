@@ -59,7 +59,7 @@ namespace OpenDoorsInSpace
 
         private TextMeshProUGUI CreateYouAreFiredDueToNegliganceSubtext()
         {
-            var youAreFiredOriginalReasonSubtextGameObject = this.FindYouAreFiredOriginalSubtextGameObject();
+            var youAreFiredOriginalReasonSubtextGameObject = FindYouAreFiredOriginalSubtextGameObject();
             var youAreFiredNegliganceReasonSubtextGameObject = Instantiate(youAreFiredOriginalReasonSubtextGameObject, youAreFiredOriginalReasonSubtextGameObject.transform.parent);
             youAreFiredNegliganceReasonSubtextGameObject.name = youAreFiredNegliganceReasonSubtextGameObject.name + " (OpenDoorsInSpace fired subtext)";
             youAreFiredNegliganceReasonSubtextGameObject.SetActive(false);
@@ -85,14 +85,14 @@ namespace OpenDoorsInSpace
             {
                 youAreFiredDueToNegliganceSubtextTMP = CreateYouAreFiredDueToNegliganceSubtext();
             }
-            this.FindYouAreFiredOriginalSubtextGameObject()?.SetActive(false);
+            FindYouAreFiredOriginalSubtextGameObject()?.SetActive(false);
             youAreFiredDueToNegliganceSubtextTMP.gameObject.SetActive(true);
 
         }
 
         public void ResetEjectingDueToNegligance()
         {
-            this.FindYouAreFiredOriginalSubtextGameObject()?.SetActive(true);
+            FindYouAreFiredOriginalSubtextGameObject()?.SetActive(true);
             youAreFiredDueToNegliganceSubtextTMP?.gameObject?.SetActive(false);
 
             IsEjectingDueToNegligence = false;
