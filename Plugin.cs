@@ -2,7 +2,6 @@
 using BepInEx.Logging;
 using HarmonyLib;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using TMPro;
 using Unity.Netcode;
@@ -150,23 +149,21 @@ namespace OpenDoorsInSpace
         }
     }
 
-    // TODO: patch Coroutine instead?
-    [HarmonyPatch]
-    public class WaitForSecondsCtorPatch
+    [HarmonyPatch(typeof(StartOfRound), nameof(StartOfRound.playersFiredGameOver), MethodType.Enumerator)]
+    public class StartOfRoundPlayersFiredGameOverEnumeratorPatch
     {
-        public static IEnumerable<MethodBase> TargetMethods()
+        public static void Prefix(IEnumerator<object> __instance)
         {
-            yield return AccessTools.Constructor(typeof(WaitForSeconds), [typeof(float)]);
-        }
+            var stateField = AccessTools.DeclaredField(__instance.GetType(), "<>1__state");
+            var currentField = AccessTools.DeclaredField(__instance.GetType(), "<>2__current");
 
-        public static void Prefix(ref float seconds)
-        {
-            if (Plugin.Manager != null && Plugin.Manager.IsEjectingDueToNegligence && (
-                seconds == 5f || // before alarm
-                seconds == 9.37f // before doors open
-            ))
+            Plugin.Log.LogDebug($"stateField: {stateField.GetValue(__instance)}");
+            Plugin.Log.LogDebug($"currentField: {currentField.GetValue(__instance)}");
+
+            if (Plugin.Manager != null && Plugin.Manager.IsEjectingDueToNegligence && ((int) stateField.GetValue(__instance)) < 2)
             {
-                seconds = 0f;
+                // Skip 5s wait, alarm and fired speech sfx, and another ~9s wait before opening the doors
+                stateField.SetValue(__instance, 2);
             }
         }
     }
