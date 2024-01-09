@@ -82,7 +82,6 @@ namespace OpenDoorsInSpace
             return youAreFiredDueTopNegliganceSubtextTMP;
         }
 
-        [ClientRpc]
         public void EjectDueToNegligance()
         {
             if (IsEjectingDueToNegligence)
