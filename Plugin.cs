@@ -4,6 +4,7 @@ using HarmonyLib;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace OpenDoorsInSpace
 {
@@ -37,9 +38,18 @@ namespace OpenDoorsInSpace
         public bool IsEjectingDueToNegligence { get; internal set; }
 
         private TextMeshProUGUI youAreFiredDueToNegliganceSubtextTMP;
+
         void Start()
         {
             Plugin.Log.LogDebug("OpenDoorsInSpacePluginManager Start");
+
+            SceneManager.activeSceneChanged += HandleActiveSceneChanged;
+        }
+
+        void HandleActiveSceneChanged(Scene prevScene, Scene activeScene)
+        {
+            // Handle cases when players disconnect while the sequence is ongoing, etc.
+            ResetEjectingDueToNegligance();
         }
 
         private GameObject GetYouAreFiredOriginalReasonSubtextGameObject()
