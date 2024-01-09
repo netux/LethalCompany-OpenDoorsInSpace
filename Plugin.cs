@@ -85,7 +85,7 @@ namespace OpenDoorsInSpace
             {
                 youAreFiredDueToNegliganceSubtextTMP = CreateYouAreFiredDueToNegliganceSubtext();
             }
-            FindYouAreFiredOriginalSubtextGameObject()?.SetActive(false);
+            FindYouAreFiredOriginalSubtextGameObject().SetActive(false);
             youAreFiredDueToNegliganceSubtextTMP.gameObject.SetActive(true);
 
         }
@@ -93,7 +93,10 @@ namespace OpenDoorsInSpace
         public void ResetEjectingDueToNegligance()
         {
             FindYouAreFiredOriginalSubtextGameObject()?.SetActive(true);
-            youAreFiredDueToNegliganceSubtextTMP?.gameObject?.SetActive(false);
+            if (youAreFiredDueToNegliganceSubtextTMP != null && youAreFiredDueToNegliganceSubtextTMP.gameObject != null)
+            {
+                youAreFiredDueToNegliganceSubtextTMP.gameObject.SetActive(false);
+            }
 
             IsEjectingDueToNegligence = false;
         }
