@@ -84,7 +84,7 @@ namespace OpenDoorsInSpace
 
         public void EjectDueToNegligance()
         {
-            if (IsEjectingDueToNegligence)
+            if (StartOfRound.Instance.firingPlayersCutsceneRunning || IsEjectingDueToNegligence)
             {
                 return;
             }
