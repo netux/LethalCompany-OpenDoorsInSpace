@@ -2,7 +2,7 @@
     "name": "OpenDoorsInSpace",
     "version_number": "1.0.0",
     "description": "Open doors while the ship is in space. You won't believe what happens!",
-    "website_url": "https://github.com/netux/OpenDoorsInSpace",
+    "website_url": "https://github.com/netux/LethalCompany-OpenDoorsInSpace",
     "dependencies": [
         "BepInEx-BepInExPack-5.4.2100"
     ]
