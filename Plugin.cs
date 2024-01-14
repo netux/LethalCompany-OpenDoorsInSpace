@@ -74,8 +74,11 @@ namespace OpenDoorsInSpace
         {
             if (StartOfRound.Instance.firingPlayersCutsceneRunning || IsEjectingDueToNegligence)
             {
+                Plugin.Log.LogInfo($"Could not eject due to negligance: cutscene is already running");
                 return;
             }
+
+            Plugin.Log.LogInfo($"Ejecting due to negligance");
 
             IsEjectingDueToNegligence = true;
 
@@ -92,6 +95,8 @@ namespace OpenDoorsInSpace
 
         public void ResetEjectingDueToNegligance()
         {
+            Plugin.Log.LogInfo($"Reseting ...");
+
             FindYouAreFiredOriginalSubtextGameObject()?.SetActive(true);
             if (youAreFiredDueToNegliganceSubtextTMP != null && youAreFiredDueToNegliganceSubtextTMP.gameObject != null)
             {

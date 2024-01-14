@@ -12,6 +12,7 @@ namespace OpenDoorsInSpace.Patches
         {
             if (!__instance.triggerScript.interactable && StartOfRound.Instance.inShipPhase)
             {
+                Plugin.Log.LogInfo($"Forcing door buttons to be interactible");
                 __instance.triggerScript.interactable = true;
             }
         }
@@ -20,7 +21,6 @@ namespace OpenDoorsInSpace.Patches
         [HarmonyPrefix]
         public static bool HangarShipDoor_PlayDoorAnimation_Prefix(bool closed)
         {
-            Plugin.Log.LogDebug($"HangarShipDoor.PlayDoorAnimation(closed: {closed}) Prefix");
             if (!closed && StartOfRound.Instance.inShipPhase)
             {
                 Plugin.Manager.EjectDueToNegligance();
@@ -32,7 +32,6 @@ namespace OpenDoorsInSpace.Patches
         [HarmonyPrefix]
         public static void StartOfRound_EndPlayersFiredSequenceClientRpc_Prefix()
         {
-            Plugin.Log.LogDebug($"StartOfRound.EndPlayersFiredSequenceClientRpc() Prefix");
             Plugin.Manager.ResetEjectingDueToNegligance();
         }
 
@@ -41,14 +40,11 @@ namespace OpenDoorsInSpace.Patches
         public static void StartOfRound_playersFiredGameOver_Enumerator_Prefix(IEnumerator<object> __instance)
         {
             var stateField = AccessTools.DeclaredField(__instance.GetType(), "<>1__state");
-            var currentField = AccessTools.DeclaredField(__instance.GetType(), "<>2__current");
-
-            Plugin.Log.LogDebug($"stateField: {stateField.GetValue(__instance)}");
-            Plugin.Log.LogDebug($"currentField: {currentField.GetValue(__instance)}");
 
             if (Plugin.Manager != null && Plugin.Manager.IsEjectingDueToNegligence && ((int)stateField.GetValue(__instance)) < 2)
             {
-                // Skip 5s wait, alarm and fired speech sfx, and another ~9s wait before opening the doors
+                // Skip 5s wait, alarm and fired speech sfx, and another ~9s wait before the doors open
+                Plugin.Log.LogInfo($"Skipping alarms, fired speech, and waiting time of players fired sequence");
                 stateField.SetValue(__instance, 2);
             }
         }
