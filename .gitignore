@@ -4,3 +4,5 @@ obj/
 
 lib/*
 !lib/.gitkeep
+
+thunderstore.zip
