@@ -25,6 +25,6 @@ Requires BepInEx. You can get the LethalCompany-specific variant from here: <htt
 Requires .NET 8
 
 1. Clone repository
-1. Copy all DLLs from `(Game folder)Lethal Company_Data/Managed` into this project's `lib/`
+1. Copy all DLLs from `(Game folder)/Lethal Company_Data/Managed` into this project's `lib/`
 1. Run `dotnet build`
 1. Output DLL should be in `bin/(Debug or Release)/netstandard2.1/OpenDoorsInSpace.dll`
